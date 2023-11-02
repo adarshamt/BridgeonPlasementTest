@@ -30,6 +30,18 @@ const productFetchHandler = async()=>{
    
 
 }
+const [searchText, setSearchText] = useState('')
+const handleKeyDown = (event) => {
+  if (event.key === 'Enter') {
+    // Your function to execute when Enter key is pressed
+
+    
+    nav(`/search/${searchText} `)
+  }
+};
+const handleInputChange = (event) => {
+  setSearchText(event.target.value); // Update the searchText state when input changes
+};
 
 useEffect(()=>{
 
@@ -44,7 +56,12 @@ productFetchHandler()
 
             <h3>flipkart</h3>
 
-            <input type="text" />
+            <input type="text"
+             placeholder="Search…"
+             
+                  onKeyDown={handleKeyDown}
+                  onChange={handleInputChange}
+                  value={searchText} />
 
 
 
@@ -57,7 +74,7 @@ productFetchHandler()
       <div className="products_container">
        {data && data.map((item,index)=>(
         <>
-        <div onClick={() => nav(`/viewproducts/${item._id}`)} key={index} className="product">
+        <div onClick={() => nav(`/viewproduct/${item._id}`)} key={index} className="product">
             <img src={item.images[0].url}alt="" />
              <h4> {item.productName}</h4>
              <h2>price : ₹ {item.price}</h2>
